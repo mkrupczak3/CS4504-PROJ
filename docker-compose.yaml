@@ -11,6 +11,9 @@ services:
     networks:
       pdc-net:
         ipv4_address: 172.20.0.5
+    ports:
+      - "5555:5555"
+      - "5555:5555/udp"
   server:
     build: .
     command: TCPServer
@@ -19,6 +22,7 @@ services:
     networks:
       pdc-net:
         ipv4_address: 172.20.0.6
+
   client:
     build: .
     command: TCPClient
