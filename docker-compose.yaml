@@ -1,0 +1,30 @@
+version: '3'
+networks:
+  pdc-net:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+services:
+  serverrouter:
+    build: .
+    command: TCPServerRouter
+    networks:
+      pdc-net:
+        ipv4_address: 172.20.0.5
+  server:
+    build: .
+    command: TCPServer
+    depends_on:
+      - serverrouter
+    networks:
+      pdc-net:
+        ipv4_address: 172.20.0.6
+  client:
+    build: .
+    command: TCPClient
+    depends_on:
+      - serverrouter
+      - server
+    networks:
+      pdc-net:
+        ipv4_address: 172.20.0.7
