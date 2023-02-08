@@ -3,7 +3,13 @@ networks:
   pdc-net:
     ipam:
       config:
-        - subnet: 172.20.0.0/24
+        - subnet: 172.20.0.0/16
+  bridge-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.22.0.0/16
+
 services:
   serverrouter:
     build: .
@@ -11,6 +17,12 @@ services:
     networks:
       pdc-net:
         ipv4_address: 172.20.0.5
+      bridge-net:
+        ipv4_address: 172.22.0.5
+
+    ports:
+      - "5555:5555"
+      - "5555:5555/udp"
   server:
     build: .
     command: TCPServer
@@ -19,6 +31,7 @@ services:
     networks:
       pdc-net:
         ipv4_address: 172.20.0.6
+
   client:
     build: .
     command: TCPClient
