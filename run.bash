@@ -11,6 +11,10 @@ if [[ ! -d $BUILD_DIR ]]; then
 fi
 
 javac -d "$BUILD_DIR" $SRC_DIR/*.java
+if [[ $? != 0 ]]; then
+    echo "Compile failed."
+    exit 1
+fi
 
 PROGRAM="$1"
 if [[ -z $PROGRAM ]]; then
