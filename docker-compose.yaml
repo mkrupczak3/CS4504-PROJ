@@ -19,7 +19,6 @@ services:
         ipv4_address: 172.23.0.5
       bridge-net:
         ipv4_address: 172.24.0.5
-
     ports:
       - "5555:5555"
       - "5555:5555/udp"
