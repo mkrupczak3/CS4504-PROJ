@@ -19,3 +19,8 @@ Enclosed in this repository is the code and the project documents we will be usi
 3. Create a user guide document describing the process for running the lab environment (see sample document [here](Part1-UserGuide - Sample.pdf))
 
 4. Assemble the final deliverable as a .zip archive, due Mon 02/13 at 11:59pm
+
+# TODO
+
+- [ ] make TCPClient and TCPServer send and receive binary data
+- [ ] parameterize IP and ports for all programs (make it not hardcoded - default values are ok)
