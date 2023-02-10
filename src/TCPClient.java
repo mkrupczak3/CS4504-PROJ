@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.nio.file.Files;
 import java.util.Enumeration;
 
 public class TCPClient {
@@ -23,6 +24,9 @@ public class TCPClient {
       System.err.println("Invalid or missing arguments.");
       System.exit(1);
     }
+    //Checks if file is a .txt file
+    String[] fileSplit = fileName.split(".");
+    boolean isTxt = fileSplit[1].toLowerCase().equals("txt");
 
     if(args.length>=2){
       routerName = args[1]; // ServerRouter host name
@@ -62,8 +66,23 @@ public class TCPClient {
     }
 
     // Variables for message passing
-    Reader reader = new FileReader(fileName); 
-    BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
+    Reader reader;
+    BufferedReader fromFile;
+    if(isTxt){
+      reader = new FileReader(fileName); 
+      fromFile = new BufferedReader(reader); // reader for the string file
+    }
+    else{
+      File inFile = new File(fileName);
+      byte[] fileByteArry = new byte[(int) inFile.length()]; 
+      try {
+        FileInputStream fileBytes = new FileInputStream(inFile);
+        fileBytes.read(fileByteArry);
+      } catch (Exception e) {
+        System.err.println("File was empty or could not be read");
+        System.exit(1);
+      }
+  }
     String fromServer; // messages received from ServerRouter
     String fromUser; // messages sent to ServerRouter
    
@@ -88,12 +107,17 @@ public class TCPClient {
         break;
       }
       t = t1 - t0; //Thomas. Cycle Time
-      System.out.println("Cycle time: " + t);
-      fromUser = fromFile.readLine(); // reading strings from a file
-      if (fromUser != null) {
-          System.out.println("Client: " + fromUser);
-          out.println(fromUser); // sending the strings to the Server via ServerRouter
-          t0 = System.currentTimeMillis();
+      if(isTxt){
+        System.out.println("Cycle time: " + t);
+        fromUser = fromFile.readLine(); // reading strings from a file
+        if (fromUser != null) {
+            System.out.println("Client: " + fromUser);
+            out.println(fromUser); // sending the strings to the Server via ServerRouter
+            t0 = System.currentTimeMillis();
+        }
+      }
+      else{
+
       }
       
       
