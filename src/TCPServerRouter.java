@@ -11,12 +11,10 @@ public class TCPServerRouter {
 
     // A socket is an endpoint for communication between two machines.
     // Here, Java has already provided an Object with optional methods for adjusting the behavior.
-    Socket clientSocket = null; // socket for the thread
+    Socket clientSocket = null; // socket for the thread. Thomas. Client refers to both TCPclient and TCPserver.
     // Routing table 
     // The routing table is a 2D array with 10 rows and 2 columns.
-    
-    Socket clientSocket = null; // socket for the thread. Thomas. Client refers to both TCPclient and TCPserver.
-    Object[][] RoutingTable = new Object[10][2]; // routing table
+        Object[][] RoutingTable = new Object[10][2]; // routing table
     // Note that a port and a socket are different things. A port is a number that identifies a
     // specific process to which an incoming network message is to be delivered while a socket is
     // an endpoint for communication.

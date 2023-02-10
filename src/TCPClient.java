@@ -16,20 +16,28 @@ public class TCPClient {
     String host = addr.getHostAddress(); // Client machine's IP
     //Paramaterization by Dillon
     String routerName; 
-    if(args.length==2||args.length==1) {
-      routerName = args[0]; // ServerRouter host name
+    String fileName = "file.txt";
+    if(args.length>=1) {
+      fileName = args[0];
+    }
+    else{
+      System.err.println("Invalid or missing arguments.");
+      System.exit(1);
+    }
+    if(args.length>=2){
+      routerName = args[1]; // ServerRouter host name
     }
     else{
       routerName = "172.20.0.5";
     }
     int SockNum;
-    if(args.length==2){
-      SockNum = Integer.parseInt(args[1]);
+    if(args.length>=3){
+      SockNum = Integer.parseInt(args[2]);
     }
     else {
       SockNum = 5555; // port number
     }
-
+    
     // In order to send and recieve data from the Server, the Client
     // has to be able to connect to the ServerRouter, so there is
     // try-catch block in place in order to do so.
@@ -46,7 +54,7 @@ public class TCPClient {
     }
 
     // Variables for message passing
-    Reader reader = new FileReader("file.txt"); 
+    Reader reader = new FileReader(fileName); 
     BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
     String fromServer; // messages received from ServerRouter
     String fromUser; // messages sent to ServerRouter
