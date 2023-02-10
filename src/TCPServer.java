@@ -12,15 +12,23 @@ public class TCPServer {
     String host = addr.getHostAddress(); // Server machine's IP
     //Paramaterization by Dillon
     String routerName; 
-    if(args.length==2||args.length==1) {
+    if(args.length>=1) {
       routerName = args[0]; // ServerRouter host name
     }
     else{
-      routerName = "172.20.0.5";
+      routerName = "172.24.0.5";
     }
+    String address; // destination IP (Client). Thomas. This address is set up manually
+    if(args.length>=2){
+      address=args[1];
+    }
+    else{
+      address = "172.23.0.7"; 
+    }
+
     int SockNum;
-    if(args.length==2){
-      SockNum = Integer.parseInt(args[1]);  
+    if(args.length>=3){
+      SockNum = Integer.parseInt(args[2]);  
     }
     else {
       SockNum = 5555; // port number
@@ -42,8 +50,7 @@ public class TCPServer {
     // Variables for message passing
     String fromServer; // messages sent to ServerRouter
     String fromClient; // messages received from ServerRouter
-    String address = "172.20.0.7"; // destination IP (Client). Thomas. This address is set up manually
-
+    
     // Communication process (initial sends/receives)
     out.println(address); // initial send (IP of the destination Client)
     fromClient = in.readLine(); // initial receive from router (verification of connection)
