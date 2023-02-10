@@ -30,6 +30,13 @@ public class TCPClient {
     else{
       routerName = "172.24.0.5";
     }
+    String address;
+    if(args.length>=3){
+      address=args[2];
+    }
+    else{
+      address = "172.23.0.6"; // destination IP (Server) 
+    }
     int SockNum;
     if(args.length>=4){
       SockNum = Integer.parseInt(args[3]);
@@ -58,13 +65,7 @@ public class TCPClient {
     BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
     String fromServer; // messages received from ServerRouter
     String fromUser; // messages sent to ServerRouter
-    String address;
-    if(args.length>=3){
-      address=args[2];
-    }
-    else{
-      address = "172.23.0.6"; // destination IP (Server) 
-    }
+   
     long t0, t1, t; //Thomas. Variables for time calculation
 
     // Communication process (initial sends and receives)

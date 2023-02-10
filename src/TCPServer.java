@@ -18,6 +18,14 @@ public class TCPServer {
     else{
       routerName = "172.24.0.5";
     }
+    String address; // destination IP (Client). Thomas. This address is set up manually
+    if(args.length>=2){
+      address=args[1];
+    }
+    else{
+      address = "172.23.0.7"; 
+    }
+
     int SockNum;
     if(args.length>=3){
       SockNum = Integer.parseInt(args[2]);  
@@ -42,14 +50,7 @@ public class TCPServer {
     // Variables for message passing
     String fromServer; // messages sent to ServerRouter
     String fromClient; // messages received from ServerRouter
-    String address;
-    if(args.length>=2){
-      address=args[1];
-    }
-    else{
-      address = "172.23.0.7"; // destination IP (Client). Thomas. This address is set up manually
-    }
-
+    
     // Communication process (initial sends/receives)
     out.println(address); // initial send (IP of the destination Client)
     fromClient = in.readLine(); // initial receive from router (verification of connection)
