@@ -10,8 +10,21 @@ public class TCPClient {
     BufferedReader in = null; // for reading form ServerRouter
     InetAddress addr = InetAddress.getLocalHost();
     String host = addr.getHostAddress(); // Client machine's IP
-    String routerName = "172.20.0.5"; // ServerRouter host name
-    int SockNum = 5555; // port number
+    //Paramaterization by Dillon
+    String routerName; 
+    if(args.length==2||args.length==1) {
+      routerName = args[0]; // ServerRouter host name
+    }
+    else{
+      routerName = "172.20.0.5";
+    }
+    int SockNum;
+    if(args.length==2){
+      SockNum = Integer.parseInt(args[1]);
+    }
+    else {
+      SockNum = 5555; // port number
+    }
 
     // Tries to connect to the ServerRouter
     try {

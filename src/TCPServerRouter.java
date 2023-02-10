@@ -20,7 +20,16 @@ public class TCPServerRouter {
     // Note that a port and a socket are different things. A port is a number that identifies a
     // specific process to which an incoming network message is to be delivered while a socket is
     // an endpoint for communication.
-    int SockNum = 5555; // port number
+
+    // Paramaterized by Dillon
+    int SockNum; // port number
+    if(args.length==1){
+      SockNum=Integer.parseInt(args[0]);
+    }
+    else {
+      SockNum=5555;
+    }
+
     Boolean Running = true;
     int ind = 0; // indext in the routing table
 
