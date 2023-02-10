@@ -28,10 +28,10 @@ public class TCPServer {
 
     // Tries to connect to the ServerRouter
     try {
-      Socket = new Socket(routerName, SockNum);
-      out = new PrintWriter(Socket.getOutputStream(), true);
-      in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-    } catch (UnknownHostException e) {
+      Socket = new Socket(routerName, SockNum); //Thomas. Broadcast on port 5555 for 'routername.'
+      out = new PrintWriter(Socket.getOutputStream(), true); //Thomas. A way to send data to the router.
+      in = new BufferedReader(new InputStreamReader(Socket.getInputStream())); //Thomas. A way to receive data from router.
+    } catch (UnknownHostException e) { //Thomas. There is no router called, 'routername' on port 5555
       System.err.println("Don't know about router: " + routerName);
       System.exit(1);
     } catch (IOException e) {
@@ -42,7 +42,7 @@ public class TCPServer {
     // Variables for message passing
     String fromServer; // messages sent to ServerRouter
     String fromClient; // messages received from ServerRouter
-    String address = "172.20.0.7"; // destination IP (Client)
+    String address = "172.20.0.7"; // destination IP (Client). Thomas. This address is set up manually
 
     // Communication process (initial sends/receives)
     out.println(address); // initial send (IP of the destination Client)

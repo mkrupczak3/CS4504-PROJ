@@ -28,10 +28,10 @@ public class TCPClient {
 
     // Tries to connect to the ServerRouter
     try {
-      Socket = new Socket(routerName, SockNum);
-      out = new PrintWriter(Socket.getOutputStream(), true);
-      in = new BufferedReader(new InputStreamReader(Socket.getInputStream()));
-    } catch (UnknownHostException e) {
+      Socket = new Socket(routerName, SockNum); //Thomas. Broadcasting on port 5555 for routername, trying to make connection to 'routername.'
+      out = new PrintWriter(Socket.getOutputStream(), true); //Thomas. A way to send data to the router.
+      in = new BufferedReader(new InputStreamReader(Socket.getInputStream())); //Thomas. A way to read data from the router.
+    } catch (UnknownHostException e) { //Thomas. There is no router on port 5555 that matches 'routername.'
       System.err.println("Don't know about router: " + routerName);
       System.exit(1);
     } catch (IOException e) {
@@ -40,19 +40,19 @@ public class TCPClient {
     }
 
     // Variables for message passing
-    Reader reader = new FileReader("file.txt");
+    Reader reader = new FileReader("file.txt"); 
     BufferedReader fromFile = new BufferedReader(reader); // reader for the string file
     String fromServer; // messages received from ServerRouter
     String fromUser; // messages sent to ServerRouter
-    String address = "172.20.0.6"; // destination IP (Server)
-    long t0, t1, t;
+    String address = "172.20.0.6"; // destination IP (Server) 
+    long t0, t1, t; //Thomas. Variables for time calculation
 
     // Communication process (initial sends/receives
     out.println(address); // initial send (IP of the destination Server)
     fromServer = in.readLine(); // initial receive from router (verification of connection)
     System.out.println("ServerRouter: " + fromServer);
     out.println(host); // Client sends the IP of its machine as initial send
-    t0 = System.currentTimeMillis();
+    t0 = System.currentTimeMillis(); //Thomas. Initial time.
 
     // Communication while loop
     while ((fromServer = in.readLine()) != null) {
@@ -61,7 +61,7 @@ public class TCPClient {
       if (fromServer.equals("Bye.")) { // exit statement
         break;
       }
-      t = t1 - t0;
+      t = t1 - t0; //Thomas. Cycle Time
       System.out.println("Cycle time: " + t);
 
       fromUser = fromFile.readLine(); // reading strings from a file
