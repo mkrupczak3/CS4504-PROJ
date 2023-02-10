@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.Enumeration;
 
 public class TCPClient {
   public static void main(String[] args) throws IOException {
@@ -12,8 +13,6 @@ public class TCPClient {
     Socket Socket = null; // Socket to connect with ServerRouter
     PrintWriter out = null; // Writer to ServerRouter
     BufferedReader in = null; // Reading from ServerRouter
-    InetAddress addr = InetAddress.getLocalHost();
-    String host = addr.getHostAddress(); // Client machine's IP
     //Paramaterization by Dillon
     String routerName; 
     String fileName = "file.txt";
@@ -44,6 +43,7 @@ public class TCPClient {
     else {
       SockNum = 5555; // port number
     }
+    String host = getAdapterAddr();
     
     // In order to send and recieve data from the Server, the Client
     // has to be able to connect to the ServerRouter, so there is
@@ -100,5 +100,24 @@ public class TCPClient {
     out.close();
     in.close();
     Socket.close();
+  }
+  public static String getAdapterAddr(){
+    try {
+      Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+      while (interfaces.hasMoreElements()) {
+          NetworkInterface ni = interfaces.nextElement();
+          Enumeration<InetAddress> addresses = ni.getInetAddresses();
+          while (addresses.hasMoreElements()) {
+              InetAddress address = addresses.nextElement();
+              if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && address.getAddress().length == 4) {
+                  return address.getHostAddress();
+              }
+          }
+      }
+  } catch (SocketException e) {
+      System.out.println("An error occurred: " + e.getMessage());
+      System.exit(1);
+  }
+  return "";
   }
 }
