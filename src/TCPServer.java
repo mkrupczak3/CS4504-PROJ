@@ -16,7 +16,7 @@ public class TCPServer {
       routerName = args[0]; // ServerRouter host name
     }
     else{
-      routerName = "172.20.0.5";
+      routerName = "172.24.0.5";
     }
     int SockNum;
     if(args.length>=3){
@@ -47,7 +47,7 @@ public class TCPServer {
       address=args[1];
     }
     else{
-      address = "172.20.0.7"; // destination IP (Client). Thomas. This address is set up manually
+      address = "172.23.0.7"; // destination IP (Client). Thomas. This address is set up manually
     }
 
     // Communication process (initial sends/receives)

@@ -28,7 +28,7 @@ public class TCPClient {
       routerName = args[1]; // ServerRouter host name
     }
     else{
-      routerName = "172.20.0.5";
+      routerName = "172.24.0.5";
     }
     int SockNum;
     if(args.length>=4){
@@ -63,7 +63,7 @@ public class TCPClient {
       address=args[2];
     }
     else{
-      address = "172.20.0.6"; // destination IP (Server) 
+      address = "172.23.0.6"; // destination IP (Server) 
     }
     long t0, t1, t; //Thomas. Variables for time calculation
 
