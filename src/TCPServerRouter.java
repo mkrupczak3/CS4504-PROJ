@@ -14,6 +14,8 @@ public class TCPServerRouter {
     Socket clientSocket = null; // socket for the thread
     // Routing table 
     // The routing table is a 2D array with 10 rows and 2 columns.
+    
+    Socket clientSocket = null; // socket for the thread. Thomas. Client refers to both TCPclient and TCPserver.
     Object[][] RoutingTable = new Object[10][2]; // routing table
     // Note that a port and a socket are different things. A port is a number that identifies a
     // specific process to which an incoming network message is to be delivered while a socket is
@@ -29,7 +31,7 @@ public class TCPServerRouter {
 
     ServerSocket serverSocket = null; // server socket for accepting connections
     try {
-      serverSocket = new ServerSocket(5555);
+      serverSocket = new ServerSocket(5555); //Thomas. the router is listening for broadcast signals with its device name.
       System.out.println("ServerRouter is Listening on port: 5555.");
     } catch (IOException e) {
       System.err.println("Could not listen on port: 5555.");
@@ -42,7 +44,7 @@ public class TCPServerRouter {
     // If it can't connect, it runs into catch and exits
     while (Running == true) {
       try {
-        clientSocket = serverSocket.accept();
+        clientSocket = serverSocket.accept(); //Thomas. Successful connection.
         SThread t =
             new SThread(RoutingTable, clientSocket, ind); // creates a thread with a random port
         t.start(); // starts the thread
