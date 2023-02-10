@@ -4,6 +4,7 @@ import java.net.*;
 public class TCPServerRouter {
   public static void main(String[] args) throws IOException {
 
+    // Comments by - Leiko Niwano
     // The TCP Server Router is in charge of accepting connections from the TCP Client/Server
     // and creating threads for each connection. It also creates a routing
     // table for the TCP Client/Server to use.
