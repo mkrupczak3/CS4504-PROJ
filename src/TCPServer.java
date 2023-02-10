@@ -12,16 +12,19 @@ public class TCPServer {
     String host = addr.getHostAddress(); // Server machine's IP
     //Paramaterization by Dillon
     String routerName; 
-    if(args.length==2||args.length==1) 
+    if(args.length==2||args.length==1) {
       routerName = args[0]; // ServerRouter host name
-    else
+    }
+    else{
       routerName = "172.20.0.5";
+    }
     int SockNum;
-    if(args.length==2)
-      SockNum = String.parseInt(args[1])  
-    else
+    if(args.length==2){
+      SockNum = Integer.parseInt(args[1]);  
+    }
+    else {
       SockNum = 5555; // port number
-    
+    }
 
     // Tries to connect to the ServerRouter
     try {

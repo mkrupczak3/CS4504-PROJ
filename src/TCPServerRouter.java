@@ -5,7 +5,15 @@ public class TCPServerRouter {
   public static void main(String[] args) throws IOException {
     Socket clientSocket = null; // socket for the thread
     Object[][] RoutingTable = new Object[10][2]; // routing table
-    int SockNum = 5555; // port number
+    // Paramaterized by Dillon
+    int SockNum; // port number
+    if(args.length==1){
+      SockNum=Integer.parseInt(args[0]);
+    }
+    else {
+      SockNum=5555;
+    }
+    
     Boolean Running = true;
     int ind = 0; // indext in the routing table
 
