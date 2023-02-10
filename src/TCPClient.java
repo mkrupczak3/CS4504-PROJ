@@ -23,6 +23,7 @@ public class TCPClient {
       System.err.println("Invalid or missing arguments.");
       System.exit(1);
     }
+
     if(args.length>=2){
       routerName = args[1]; // ServerRouter host name
     }
@@ -74,6 +75,7 @@ public class TCPClient {
     System.out.println("ServerRouter: " + fromServer);
     out.println(host); // Client sends the IP of its machine as initial send
     t0 = System.currentTimeMillis(); //Thomas. Initial time.
+    out.println(fileName);//sends file extension type to Server
 
     // While there is data to be read in from the server,
     // print out lines to the Server via PrintWriter labeled "out."
@@ -87,13 +89,14 @@ public class TCPClient {
       }
       t = t1 - t0; //Thomas. Cycle Time
       System.out.println("Cycle time: " + t);
-
       fromUser = fromFile.readLine(); // reading strings from a file
       if (fromUser != null) {
-        System.out.println("Client: " + fromUser);
-        out.println(fromUser); // sending the strings to the Server via ServerRouter
-        t0 = System.currentTimeMillis();
+          System.out.println("Client: " + fromUser);
+          out.println(fromUser); // sending the strings to the Server via ServerRouter
+          t0 = System.currentTimeMillis();
       }
+      
+      
     } // End While
 
     // closing connections
