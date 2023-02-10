@@ -19,3 +19,10 @@ Enclosed in this repository is the code and the project documents we will be usi
 3. Create a user guide document describing the process for running the lab environment (see sample document [here](Part1-UserGuide - Sample.pdf))
 
 4. Assemble the final deliverable as a .zip archive, due Mon 02/13 at 11:59pm
+
+# TODO
+
+- [ ] Each member of the documentation report working group must make a fork, add comments, and create a pull request
+- [ ] make TCPClient and TCPServer send and receive binary data
+- [ ] parameterize IP and ports for all programs (make it not hardcoded - default values are ok)
+- [ ] After doing a close reading of the code, estimate the results of the lab benchmarking and begin to stub out a report and user guide (use [this Google Doc](https://docs.google.com/document/d/1GBz-MCbro0JrvfaEXTlpnCDcOlLi4INHzIb_OOtZvw8/edit?usp=sharing))
