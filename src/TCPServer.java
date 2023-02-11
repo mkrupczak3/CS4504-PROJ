@@ -58,15 +58,23 @@ public class TCPServer {
 
     System.out.println("ServerRouter: " + fromClient);
 
+    String dummyThic = in.readLine();
+    System.out.println(dummyThic);
+
     String fileName = in.readLine(); // NEW: added filename to header -Matthew
-    boolean isTxt = isTXT(fileName);
+    Boolean isTxt = isTXT(fileName);
+
+    System.out.println("fileName: " + fileName);
+    System.out.println("isTxt: " + isTxt.toString());
+
+    out.println("Ack");
 
     // Communication while loop
     while ((fromClient = in.readLine()) != null) {
       if (isTxt) { // txt mode
 
         System.out.println("Client said: " + fromClient);
-        if (fromClient.equals("Bye.")) {// exit statement
+        if (fromClient.trim().equals("Bye.")) {// exit statement
           break;
         }
         fromServer = fromClient.toUpperCase(); // converting received message to upper case
@@ -75,7 +83,7 @@ public class TCPServer {
 
       } else { // base64 payload mode
 
-        if (fromClient.equals("Bye.")) {
+        if (fromClient.trim().equals("Bye.")) {
           System.out.println("Client said: Bye.");
           break;
         }
