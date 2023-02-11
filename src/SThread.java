@@ -10,7 +10,7 @@ public class SThread extends Thread {
   private int ind; // indext in the routing table
 
   // Constructor
-  SThread(Object[][] Table, Socket toClient, int index) throws IOException { 
+  SThread(Object[][] Table, Socket toClient, int index) throws IOException {
     out = new PrintWriter(toClient.getOutputStream(), true); //A way to send data to a client/server
     in = new BufferedReader(new InputStreamReader(toClient.getInputStream())); //A way to receive data to client/server
     RTable = Table;
@@ -37,8 +37,8 @@ public class SThread extends Thread {
 
       // loops through the routing table to find the destination Thomas. In other words, its pairing a client to a server or vice versa
       for (int i = 0; i < 10; i++) {
-        if (destination.equals((String) RTable[i][0])) { 
-          outSocket = (Socket) RTable[i][1]; // gets the socket for communication from the table 
+        if (destination.equals((String) RTable[i][0])) {
+          outSocket = (Socket) RTable[i][1]; // gets the socket for communication from the table
           System.out.println("Found destination: " + destination);
           outTo = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer  Thomas. Forwarding all communication to the newly paired client or server
         }
@@ -47,13 +47,15 @@ public class SThread extends Thread {
       // Communication loop
       while ((inputLine = in.readLine()) != null) {
         System.out.println("Client/Server said: " + inputLine);
-        if (inputLine.equals("Bye.")) // exit statement
-        break; //Thomas. termination of connection
         outputLine =
             inputLine; // passes the input from the machine to the output string for the destination
 
         if (outSocket != null) {
           outTo.println(outputLine); // writes to the destination
+        }
+
+        if (inputLine.equals("Bye.")) { // exit statement
+          break; //Thomas. termination of connection
         }
       } // end while
     } // end try
