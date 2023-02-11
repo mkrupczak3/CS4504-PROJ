@@ -174,7 +174,9 @@ public class TCPClient {
         Enumeration<InetAddress> addresses = ni.getInetAddresses();
         while (addresses.hasMoreElements()) {
           InetAddress address = addresses.nextElement();
-          if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && address.getAddress().length == 4) {
+          byte[] addressBytes = address.getAddress();
+          byte b0 = addressBytes[0];
+          if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && b0 != (byte) 172 && address.getAddress().length == 4) {
             return address.getHostAddress();
           }
         }
