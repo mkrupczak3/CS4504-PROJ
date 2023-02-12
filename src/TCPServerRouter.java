@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.*;
 
 public class TCPServerRouter {
+  public static final int TABLE_ENTRIES = 100; // NEW: better table management -Matthew
+
   public static void main(String[] args) throws IOException {
 
     // Comments by - Leiko Niwano
@@ -12,9 +14,10 @@ public class TCPServerRouter {
     // A socket is an endpoint for communication between two machines.
     // Here, Java has already provided an Object with optional methods for adjusting the behavior.
     Socket clientSocket = null; // socket for the thread. Thomas. Client refers to both TCPclient and TCPserver.
-    // Routing table 
-    // The routing table is a 2D array with 10 rows and 2 columns.
-        Object[][] RoutingTable = new Object[10][2]; // routing table
+    // Routing table
+    // The routing table is a 2D array with TABLE_ENTRIES rows and 2 columns.
+
+    Object[][] RoutingTable = new Object[TABLE_ENTRIES][2]; // routing table
     // Note that a port and a socket are different things. A port is a number that identifies a
     // specific process to which an incoming network message is to be delivered while a socket is
     // an endpoint for communication.
@@ -56,6 +59,7 @@ public class TCPServerRouter {
             new SThread(RoutingTable, clientSocket, ind); // creates a thread with a random port
         t.start(); // starts the thread
         ind++; // increments the index
+        ind %= TABLE_ENTRIES; // NEW: table will overwrite oldest entry instead of overflowing -Matthew
         System.out.println(
             "ServerRouter connected with Client/Server: "
                 + clientSocket.getInetAddress().getHostAddress());
