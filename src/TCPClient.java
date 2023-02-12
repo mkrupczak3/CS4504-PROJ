@@ -179,8 +179,6 @@ public class TCPClient {
           InetAddress address = addresses.nextElement();
           byte[] addressBytes = address.getAddress();
           byte b0 = addressBytes[0];
-          System.out.println(address.getHostAddress());
-          System.out.println(isRunningInsideDocker());
           if ((!address.isLinkLocalAddress() && !address.isLoopbackAddress() && (b0 != (byte) 172) && address.getAddress().length == 4) || isRunningInsideDocker()) {
             return address.getHostAddress();
           }
