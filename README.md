@@ -1,7 +1,5 @@
 # CS4504 PROJ 1 P1
 
-## Repo for our group project
-
 ## Members:
 
 ### **documentation report working group**
@@ -19,7 +17,7 @@
 
 ## Description
 
-Enclosed in this repository is the code and the project documents we will be using for this project.
+Enclosed in this repository is the code and the project documents we will be using for this project. See project specification [part 1](./doc/Project-Specification-Part1.pdf) and [part 2](./doc/Project-Specification-Part2.pdf) for details
 
 ## Operation Guide
 
@@ -123,11 +121,6 @@ The responsibilities of the **benchmarking working group** include:
 
 6. Provide context and assistance to the documentation working group as they assemble the report and user guide
 
-### Benchmarking Working Group
-
-The responsibilities of the **benchmarking working group** include:
-
-1. Benchmark the
 
 # TODO
 
