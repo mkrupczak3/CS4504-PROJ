@@ -17,7 +17,7 @@ public class TCPServer {
       routerName = args[0]; // ServerRouter host name
     }
     else{
-      routerName = "172.24.0.5";
+      routerName = "172.23.0.5";
     }
     String address; // destination IP (Client). Thomas. This address is set up manually
     if(args.length>=2){

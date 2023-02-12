@@ -1,10 +1,10 @@
 version: '3'
 networks:
-  # pdc-net:
+  # pdc-net: # Docker-only overlay network
   #   ipam:
   #     config:
   #       - subnet: 172.23.0.0/16
-  bridge-net:
+  bridge-net: # Only needed if need to talk to external network
     driver: bridge
     ipam:
       config:
@@ -13,18 +13,18 @@ networks:
 services:
   serverrouter:
     build: .
-    command: TCPServerRouter
+    command: ["TCPServerRouter"]
     networks:
       # pdc-net:
       #   ipv4_address: 172.23.0.5
-      bridge-net:
+      bridge-net: # external network bridge, makes ports available on host
         ipv4_address: 172.24.0.5
     ports:
       - "5555:5555"
       - "5555:5555/udp"
   # server:
   #   build: .
-  #   command: TCPServer
+  #   command: ["TCPServer"]
   #   depends_on:
   #     - serverrouter
   #   networks:
@@ -33,7 +33,7 @@ services:
 
   # client:
   #   build: .
-  #   command: TCPClient
+  #   command: ["TCPClient", "file.txt"]
   #   depends_on:
   #     - serverrouter
   #     - server

@@ -22,7 +22,10 @@ if [[ -z $PROGRAM ]]; then
     exit 1
 fi
 
-java -cp "$BUILD_DIR" "$PROGRAM"
+ARGUMENT="$2"
 
-
-
+if [[ -z $ARGUMENT ]]; then
+    java -cp "$BUILD_DIR" "$PROGRAM"
+else
+    java -cp "$BUILD_DIR" "$PROGRAM" "$ARGUMENT"
+fi

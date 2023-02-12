@@ -4,6 +4,9 @@ import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.Base64;
 
+// import java.util.stream.*; // not needed // only used for isRunningInsideDocker()
+// import java.nio.file.Paths;
+
 public class TCPClient {
   public static void main(String[] args) throws IOException {
 
@@ -32,7 +35,7 @@ public class TCPClient {
       routerName = args[1]; // ServerRouter host name
     }
     else {
-      routerName = "172.24.0.5";
+      routerName = "172.23.0.5";
     }
     String address;
 
@@ -176,7 +179,9 @@ public class TCPClient {
           InetAddress address = addresses.nextElement();
           byte[] addressBytes = address.getAddress();
           byte b0 = addressBytes[0];
-          if (!address.isLinkLocalAddress() && !address.isLoopbackAddress() && b0 != (byte) 172 && address.getAddress().length == 4) {
+          System.out.println(address.getHostAddress());
+          System.out.println(isRunningInsideDocker());
+          if ((!address.isLinkLocalAddress() && !address.isLoopbackAddress() && (b0 != (byte) 172) && address.getAddress().length == 4) || isRunningInsideDocker()) {
             return address.getHostAddress();
           }
         }
@@ -188,6 +193,21 @@ public class TCPClient {
     System.err.println("An error occurred. Could not obtain network adapter address");
     System.exit(1);
     return "";
+  }
+
+  public static Boolean isRunningInsideDocker() { // Checks if this program is running in a Docker container -Matthew
+    File f = new File("/.dockerenv");
+    if (f.exists()) {
+      return true;
+    }
+
+    // try (Stream < String > stream =
+    //      Files.lines(Paths.get("/proc/1/cgroup"))) {
+    //   return stream.anyMatch(line -> line.contains("/docker"));
+    // } catch (IOException e) {
+    //   return false;
+    // }
+    return false;
   }
 
   public static boolean isTXT(String fileName) {
