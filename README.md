@@ -21,7 +21,75 @@
 
 Enclosed in this repository is the code and the project documents we will be using for this project.
 
-## Responsibilities
+## Operation Guide
+
+Clone this repository to your disk, then enter the project directory.
+
+### Run the **Router** program:
+```bash
+javac src/*.java
+java src/TCPServeRouter.java
+```
+
+**OR**
+
+```bash
+docker-compose up --force-recreate -t 1
+```
+
+### Run the **Server** program:
+```bash
+javac src/*.java
+java src/TCPServer.java <router IP> <client IP> <port number>
+```
+
+### Run the **Client** program:
+
+#### TXT mode:
+```bash
+javac src/*.java
+java src/TCPClient.java localfilename.txt <router IP> <server IP> <port number>
+```
+
+#### base64payload mode (any filetype other than .txt):
+```bash
+javac src/*.java
+java src/TCPClient.java song.mp3 <router IP> <server IP> <port number>
+```
+
+### **(Alternative)** Run all parts locally with docker-compose:
+
+Running all parts locally requires [Docker](https://www.docker.com/) and [docker-compose](https://docs.docker.com/compose/install/) to be installed first.
+
+#### Router only (and publish 5555 on host):
+```bash
+docker-compose up -d --force-recreate -t 1
+```
+
+#### All parts, txt mode:
+```
+docker-compose -f docker-compose-test-local-txt-mode.yml up --force-recreate -t 1
+```
+
+#### All parts, base64 mode:
+```
+docker-compose -f docker-compose-test-local-base64-mode.yml up --force-recreate -t 1
+```
+
+### Docker Troubleshooting
+If your shell complains about a network address not being available, run the following:
+
+```bash
+docker-compose -f docker-compose-test-local-txt-mode.yml down -t 1
+docker network prune
+```
+
+If containers are erroring out, rebuild them from source (bypassing the stale cache):
+```bash
+docker-compose -f docker-compose-test-local-txt-mode.yml build --no-cache
+```
+
+## Project Responsibilities
 
 ### Documentation Working Group
 
