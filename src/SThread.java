@@ -50,6 +50,7 @@ public class SThread extends Thread {
       t1=System.nanoTime();
       t=(t1-t0)/1000000.0d; // Router table lookup time
       lookupAverage.addValue(t);
+      System.out.println("Average router lookup time: "+SThread.lookupAverage.getAverage());
       // Communication loop
       while ((inputLine = in.readLine()) != null) {
         System.out.println("Client/Server said: " + inputLine);

@@ -67,7 +67,6 @@ public class TCPServerRouter {
         System.err.println("Client/Server failed to connect.");
         System.exit(1);
       }
-      System.out.println("Average router lookup time: "+SThread.lookupAverage.getAverage());
     } // end while
     
     // closing connections
