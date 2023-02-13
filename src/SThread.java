@@ -9,6 +9,8 @@ public class SThread extends Thread {
   private Socket outSocket; // socket for communicating with a destination
   private int ind; // indext in the routing table
   public static SynchronizedRollingAverage lookupAverage = new SynchronizedRollingAverage();
+  public static SynchronizedRollingAverage messageSizeAverage = new SynchronizedRollingAverage();
+
   // Constructor
   SThread(Object[][] Table, Socket toClient, int index) throws IOException {
     out = new PrintWriter(toClient.getOutputStream(), true); //A way to send data to a client/server
@@ -50,12 +52,14 @@ public class SThread extends Thread {
       t1=System.nanoTime();
       t=(t1-t0)/1000000.0d; // Router table lookup time
       lookupAverage.addValue(t);
-      System.out.println("Average router lookup time: "+SThread.lookupAverage.getAverage());
       // Communication loop
       while ((inputLine = in.readLine()) != null) {
         System.out.println("Client/Server said: " + inputLine);
         outputLine =
             inputLine; // passes the input from the machine to the output string for the destination
+        messageSizeAverage.addValue(inputLine.length());
+        System.out.println("Average message size: " + messageSizeAverage.getAverage());
+        System.out.println("Average router lookup time: "+SThread.lookupAverage.getAverage());
 
         if (outSocket != null) {
           outTo.println(outputLine); // writes to the destination

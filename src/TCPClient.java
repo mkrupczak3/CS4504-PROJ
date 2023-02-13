@@ -8,6 +8,8 @@ import java.util.Base64;
 // import java.nio.file.Paths;
 
 public class TCPClient {
+  public static SynchronizedRollingAverage cycleTimeAverage = new SynchronizedRollingAverage();
+
   public static void main(String[] args) throws IOException {
 
     // Comments by: Mark Walker
@@ -98,7 +100,8 @@ public class TCPClient {
     String fromServer; // messages received from ServerRouter
     String fromUser; // messages sent to ServerRouter
 
-    long t0, t1, t; //Thomas. Variables for time calculation
+    long txt_t0 = 0, txt_t1 = 0; //Thomas. Variables for time calculation
+    long bin_t0 = 0, bin_t1 = 0;
 
     // Communication process (initial sends and receives)
     out.println(address); // Initial send (IP of the destination Server)
@@ -110,31 +113,38 @@ public class TCPClient {
     String host = getAdapterAddr();
     out.println(host); // Client sends the IP of its machine as initial send
 
-    t0 = System.currentTimeMillis(); //Thomas. Initial time.
-
     out.println(fileName); // NEW: sends full filename (with extension) to Server -Matthew
-
+ 
     // While there is data to be read in from the server,
     // print out lines to the Server via PrintWriter labeled "out."
     // Time is recorded when a line is read (assigned value t1) and used to display time cycle.
     // If the exit phrase is read, end the loop.
     while ((fromServer = in.readLine()) != null) {
       System.out.println("Server: " + fromServer);
-      t1 = System.currentTimeMillis();
       if (fromServer.equals("Bye.")) { // exit statement
         break;
       }
 
-      t = t1 - t0; //Thomas. Cycle Time
-      System.out.println("Cycle time: " + t);
 
       if (isTxt) {
+        if (txt_t0 != 0) {
+          txt_t1 = System.nanoTime();
+
+          double t_ms = ((double)(txt_t1 - txt_t0)) / 1000000.0;
+          System.out.println("Cycle time: " + t_ms);
+          cycleTimeAverage.addValue(t_ms);
+          System.out.println("Cycle time average: " + cycleTimeAverage.getAverage());
+        }
+        
+  
         fromUser = fromFile.readLine(); // reading strings from a file
         if (fromUser == null || fromUser.equals("Bye.")) { // NEW: Add "Bye." to end of text message, if it is not there already -Matthew
           out.println("Bye.");
+          break;
         } else {
           out.println(fromUser); // sending the text file strings to the Server via ServerRouter
         }
+        txt_t0 = System.nanoTime();
       }
       else {
 
@@ -142,25 +152,23 @@ public class TCPClient {
 
         // If is not a txt file, encode it as base64 txt and send it
         out.println(base64Payload);
-        t0 = System.currentTimeMillis();
+        bin_t0 = System.nanoTime();
 
         System.out.println("Server: " + in.readLine());
-        t1 = System.currentTimeMillis();
+        bin_t1 = System.nanoTime();
 
-        t = t1 - t0;
-        System.out.println("Cycle time: " + t);
-
+        double t_ms = ((double)(txt_t1 - txt_t0)) / 1000000.0;
+        System.out.println("Cycle time: " + t_ms);
+        cycleTimeAverage.addValue(t_ms);
+        System.out.println("Cycle time average: " + cycleTimeAverage.getAverage());
+  
         System.out.println("Client: Bye.");
         out.println("Bye.");
 
         fromUser = null;
-
+        break;
       }
 
-      if (fromUser != null) {
-        System.out.println("Client: " + fromUser);
-        t0 = System.currentTimeMillis();
-      }
     } // End While
 
     // closing connections
