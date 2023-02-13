@@ -1,7 +1,23 @@
 import java.io.*;
 import java.net.*;
 
+class SynchronizedRollingAverage {
+  private double avg = 0;
+  private long count = 0;
+
+  public synchronized void addValue(double value) {
+    avg = ((avg * count) + value) / (++count);
+  }
+
+  public synchronized double getAverage() {
+    return avg;
+  }
+}
+
 public class SThread extends Thread {
+  public static SynchronizedRollingAverage averageMessageSize = new SychronizedRollingAverage();
+  public static SynchronizedRollingAverage averageLookupTime = new SychronizedRollingAverage();
+
   private Object[][] RTable; // routing table
   private PrintWriter out, outTo; // writers (for writing back to the machine and to destination)
   private BufferedReader in; // reader (for reading from the machine connected to)
@@ -23,6 +39,8 @@ public class SThread extends Thread {
   // Run method (will run for each machine that connects to the ServerRouter)
   public void run() {
     try {
+      long messageSize = 0;
+
       // Initial sends/receives
       destination = in.readLine(); // initial read (the destination for writing)
       System.out.println("Forwarding to " + destination);
@@ -35,20 +53,24 @@ public class SThread extends Thread {
         System.out.println("Thread interrupted");
       }
 
+      long routeLookupStartTime = System.nanoTime();
       // loops through the routing table to find the destination
       for (int i = 0; i < 10; i++) {
         if (destination.equals((String) RTable[i][0])) {
           outSocket = (Socket) RTable[i][1]; // gets the socket for communication from the table
           System.out.println("Found destination: " + destination);
           outTo = new PrintWriter(outSocket.getOutputStream(), true); // assigns a writer
+
+          averageLookupTime.addValue(System.nanoTime() - routeLookupStartTime);
         }
       }
 
       // Communication loop
       while ((inputLine = in.readLine()) != null) {
         System.out.println("Client/Server said: " + inputLine);
-        if (inputLine.equals("Bye.")) // exit statement
-        break;
+        if (inputLine.equals("Bye.")) {// exit statement
+          break;
+        }
         outputLine =
             inputLine; // passes the input from the machine to the output string for the destination
 
