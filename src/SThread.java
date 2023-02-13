@@ -8,7 +8,7 @@ public class SThread extends Thread {
   private String inputLine, outputLine, destination, addr; // communication strings
   private Socket outSocket; // socket for communicating with a destination
   private int ind; // indext in the routing table
-
+  public static SynchronizedRollingAverage lookupAverage = new SynchronizedRollingAverage();
   // Constructor
   SThread(Object[][] Table, Socket toClient, int index) throws IOException {
     out = new PrintWriter(toClient.getOutputStream(), true); //A way to send data to a client/server
@@ -35,8 +35,9 @@ public class SThread extends Thread {
         System.out.println("Thread interrupted");
       }
       
-      long t0,t1,t; // variable for router lookup times
-      t0=System.currentTimeMillis(); // Initial time
+      long t0,t1; // variable for router lookup times
+      double t;
+      t0=System.nanoTime(); // Initial time
       // loops through the routing table to find the destination Thomas. In other words, its pairing a client to a server or vice versa
       for (int i = TCPServerRouter.TABLE_ENTRIES-1; i >= 0; i--) {
         if (destination.equals((String) RTable[i][0])) {
@@ -46,9 +47,9 @@ public class SThread extends Thread {
           break;
         }
       }
-      t1=System.currentTimeMillis();
-      t=t1-t0; // Router table lookup time
-      System.out.println("Router table lookup time: "+t);
+      t1=System.nanoTime();
+      t=(t1-t0)/1000000.0d; // Router table lookup time
+      lookupAverage.addValue(t);
       // Communication loop
       while ((inputLine = in.readLine()) != null) {
         System.out.println("Client/Server said: " + inputLine);
