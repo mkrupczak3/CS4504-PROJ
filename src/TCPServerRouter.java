@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 public class TCPServerRouter {
-  public static final int TABLE_ENTRIES = 100; // NEW: better table management -Matthew
+  public static final int TABLE_ENTRIES = 1000; // NEW: better table management -Matthew
 
   public static void main(String[] args) throws IOException {
 
@@ -23,12 +23,12 @@ public class TCPServerRouter {
     // an endpoint for communication.
 
     // Paramaterized by Dillon
-    int SockNum; // port number
+    int sockNum; // port number
     if(args.length==1){
-      SockNum=Integer.parseInt(args[0]);
+      sockNum=Integer.parseInt(args[0]);
     }
     else {
-      SockNum=5555;
+      sockNum=5555;
     }
 
     Boolean Running = true;
@@ -41,10 +41,10 @@ public class TCPServerRouter {
 
     ServerSocket serverSocket = null; // server socket for accepting connections
     try {
-      serverSocket = new ServerSocket(5555); //Thomas. the router is listening for broadcast signals with its device name.
-      System.out.println("ServerRouter is Listening on port: 5555.");
+      serverSocket = new ServerSocket(sockNum); //Thomas. the router is listening for broadcast signals with its device name.
+      System.out.println("ServerRouter is Listening on port: "+sockNum+".");
     } catch (IOException e) {
-      System.err.println("Could not listen on port: 5555.");
+      System.err.println("Could not listen on port: "+sockNum+".");
       System.exit(1);
     }
 
@@ -68,7 +68,7 @@ public class TCPServerRouter {
         System.exit(1);
       }
     } // end while
-
+    
     // closing connections
     clientSocket.close();
     serverSocket.close();
