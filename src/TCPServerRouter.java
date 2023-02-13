@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 
 public class TCPServerRouter {
-  public static final int TABLE_ENTRIES = 100; // NEW: better table management -Matthew
+  public static final int TABLE_ENTRIES = 1000; // NEW: better table management -Matthew
 
   public static void main(String[] args) throws IOException {
 
