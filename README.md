@@ -71,7 +71,7 @@ docker-compose -f docker-compose-test-local-txt-mode.yml up --force-recreate -t 
 
 #### All parts, base64 mode:
 ```
-docker-compose -f docker-compose-test-local-base64-mode.yml up --force-recreate -t 1
+docker-compose -f docker-compose-test-local-base64-mode-audio.yml up --force-recreate -t 1
 ```
 
 ### Docker Troubleshooting
