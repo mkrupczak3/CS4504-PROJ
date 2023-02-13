@@ -55,8 +55,8 @@ public class SThread extends Thread {
         }
 
         if (inputLine.equals("Bye.")) { // exit statement
-          RTable[index][0] = null;
-          RTable[index][1] = null;
+          RTable[ind][0] = null;
+          RTable[ind][1] = null;
           break; //Thomas. termination of connection
         }
       } // end while
