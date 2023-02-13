@@ -22,10 +22,14 @@ if [[ -z $PROGRAM ]]; then
     exit 1
 fi
 
-ARGUMENT="$2"
+# remove files from server so payload delivery can be tested
+if [[ "$PROGRAM" != "TCPClient" ]]; then
+    rm /app/*.txt /app/*.mp3 /app/*.mp4
+fi
 
-if [[ -z $ARGUMENT ]]; then
+# run Java program with all arguments passed to this shell
+if [[ $# -eq 1 ]]; then
     java -cp "$BUILD_DIR" "$PROGRAM"
 else
-    java -cp "$BUILD_DIR" "$PROGRAM" "$ARGUMENT"
+    java -cp "$BUILD_DIR" "$PROGRAM" "${@:2}"
 fi
