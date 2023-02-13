@@ -53,21 +53,19 @@ public class SThread extends Thread {
       t=(t1-t0)/1000000.0d; // Router table lookup time
       lookupAverage.addValue(t);
       System.out.println("Average router lookup time: "+SThread.lookupAverage.getAverage());
-      long totalMessageSize = 0;
       // Communication loop
       while ((inputLine = in.readLine()) != null) {
         System.out.println("Client/Server said: " + inputLine);
         outputLine =
             inputLine; // passes the input from the machine to the output string for the destination
-        totalMessageSize += inputLine.length();
+        messageSizeAverage.addValue(inputLine.length());
+        System.out.println("Average message size: " + messageSizeAverage.getAverage());
 
         if (outSocket != null) {
           outTo.println(outputLine); // writes to the destination
         }
 
         if (inputLine.equals("Bye.")) { // exit statement
-          messageSizeAverage.addValue(totalMessageSize);
-          System.out.println("Average message size: " + messageSizeAverage.getAverage());
           break; //Thomas. termination of connection
         }
       } // end while
