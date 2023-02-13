@@ -24,7 +24,7 @@ fi
 
 # remove files from server so payload delivery can be tested
 if [[ "$PROGRAM" != "TCPClient" ]]; then
-    rm /app/*.txt /app/*.mp3 /app/*.mp4
+    rm *.txt *.mp3 *.mp4
 fi
 
 # run Java program with all arguments passed to this shell
