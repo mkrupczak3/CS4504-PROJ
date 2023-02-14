@@ -4,8 +4,7 @@ import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.Base64;
 
-// import java.util.stream.*; // not needed // only used for isRunningInsideDocker()
-// import java.nio.file.Paths;
+import java.nio.file.Paths;
 
 public class TCPClient {
   public static SynchronizedRollingAverage cycleTimeAverage = new SynchronizedRollingAverage();
@@ -114,7 +113,7 @@ public class TCPClient {
     System.out.println("ServerRouter: " + fromServer);
     out.println(host); // Client sends the IP of its machine as initial send
 
-    out.println(fileName); // NEW: sends full filename (with extension) to Server -Matthew
+    out.println(Paths.get(fileName).getFileName().toString()); // NEW: sends filename (with extension) to Server -Matthew
 
     // While there is data to be read in from the server,
     // print out lines to the Server via PrintWriter labeled "out."
@@ -213,12 +212,6 @@ public class TCPClient {
       return true;
     }
 
-    // try (Stream < String > stream =
-    //      Files.lines(Paths.get("/proc/1/cgroup"))) {
-    //   return stream.anyMatch(line -> line.contains("/docker"));
-    // } catch (IOException e) {
-    //   return false;
-    // }
     return false;
   }
 
