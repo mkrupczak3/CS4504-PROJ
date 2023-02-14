@@ -56,6 +56,8 @@ public class TCPClient {
       SockNum = 5555; // port number
     }
 
+    String host = getAdapterAddr(InetAddress.getByName(address));
+
     // In order to send and recieve data from the Server, the Client
     // has to be able to connect to the ServerRouter, so there is
     // try-catch block in place in order to do so.
@@ -68,6 +70,7 @@ public class TCPClient {
       System.exit(1);
     } catch (IOException e) {
       System.err.println("Couldn't get I/O for the connection to: " + routerName);
+      System.err.println("Error: " + e.getMessage());
       System.exit(1);
     }
 
@@ -109,8 +112,6 @@ public class TCPClient {
     fromServer = in.readLine(); // Initial receive from router (verification of connection)
 
     System.out.println("ServerRouter: " + fromServer);
-
-    String host = getAdapterAddr();
     out.println(host); // Client sends the IP of its machine as initial send
 
     out.println(fileName); // NEW: sends full filename (with extension) to Server -Matthew
@@ -179,7 +180,7 @@ public class TCPClient {
     Socket.close();
   }
 
-  public static String getAdapterAddr(){
+  public static String getAdapterAddr(InetAddress serverAddress){
     try {
       Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
       while (interfaces.hasMoreElements()) {
@@ -189,7 +190,10 @@ public class TCPClient {
           InetAddress address = addresses.nextElement();
           byte[] addressBytes = address.getAddress();
           byte b0 = addressBytes[0];
-          if ((!address.isLinkLocalAddress() && !address.isLoopbackAddress() && (b0 != (byte) 172) && address.getAddress().length == 4) || isRunningInsideDocker()) {
+          byte serverB0 = serverAddress.getAddress()[0];
+          //System.out.println("b0: " + (b0 & 0xff));
+          //System.out.println("serverB0: " + (serverB0 & 0xff));
+          if ((!address.isLinkLocalAddress() && !address.isLoopbackAddress() && (b0 != (byte) 172) && address.getAddress().length == 4 && b0 == serverB0) || isRunningInsideDocker()) {
             return address.getHostAddress();
           }
         }
