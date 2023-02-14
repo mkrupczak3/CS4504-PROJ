@@ -12,3 +12,4 @@ fi
 echo "Source: $SRC_DIR"
 echo "Dest: $DIST_DIR"
 cp -r "$SRC_DIR" "$DIST_DIR"
+rm -f "$DIST_DIR/src/*.class"
