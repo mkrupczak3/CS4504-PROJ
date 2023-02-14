@@ -114,7 +114,7 @@ public class TCPClient {
     out.println(host); // Client sends the IP of its machine as initial send
 
     out.println(fileName); // NEW: sends full filename (with extension) to Server -Matthew
- 
+
     // While there is data to be read in from the server,
     // print out lines to the Server via PrintWriter labeled "out."
     // Time is recorded when a line is read (assigned value t1) and used to display time cycle.
@@ -135,8 +135,8 @@ public class TCPClient {
           cycleTimeAverage.addValue(t_ms);
           System.out.println("Cycle time average: " + cycleTimeAverage.getAverage());
         }
-        
-  
+
+
         fromUser = fromFile.readLine(); // reading strings from a file
         if (fromUser == null || fromUser.equals("Bye.")) { // NEW: Add "Bye." to end of text message, if it is not there already -Matthew
           out.println("Bye.");
@@ -148,20 +148,22 @@ public class TCPClient {
       }
       else {
 
-        System.out.println("Client: sent payload");
 
         // If is not a txt file, encode it as base64 txt and send it
-        out.println(base64Payload);
         bin_t0 = System.nanoTime();
+        System.out.println("Start Time: " + bin_t0);
+        System.out.println("Client: sending payload");
+        out.println(base64Payload);
 
         System.out.println("Server: " + in.readLine());
         bin_t1 = System.nanoTime();
+        System.out.println("End Time: " + bin_t1);
 
-        double t_ms = ((double)(txt_t1 - txt_t0)) / 1000000.0;
+        double t_ms = ((double)(bin_t1 - bin_t0)) / 1000000.0;
         System.out.println("Cycle time: " + t_ms);
         cycleTimeAverage.addValue(t_ms);
         System.out.println("Cycle time average: " + cycleTimeAverage.getAverage());
-  
+
         System.out.println("Client: Bye.");
         out.println("Bye.");
 
