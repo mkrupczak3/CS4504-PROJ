@@ -1,3 +1,6 @@
-* text eol=lf
+*.bash text eol=lf
+*.txt text eol=lf
 *.java text eol=crlf
 *.class binary
+*.mp4 binary
+*.mp3 binary
